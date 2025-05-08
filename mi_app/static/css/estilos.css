@@ -1,0 +1,49 @@
+.card {
+    animation: fadeIn 0.6s ease-in-out;
+    border-radius: 1rem;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .btn:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  input:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+  }
+  
+  /* Estilo para las tarjetas */
+.card {
+    transition: transform 0.2s ease;
+}
+.card:hover {
+    transform: scale(1.02);
+}
+
+/* Limitar el ancho de la lista */
+.container {
+    max-width: 1200px;
+}
+
+/* Estilo para el nombre de usuario */
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #4CAF50; /* Verde para el nombre */
+}
+
+.navbar-brand:hover {
+    color: #388E3C; /* Color más oscuro cuando pasa el mouse */
+}

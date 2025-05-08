@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Editar banda</h2>
+<form method="post">
+  {% csrf_token %}
+  <input type="text" name="nombre" placeholder="Nombre de la banda" class="form-control mb-3" required>
+  <button type="submit" class="btn btn-success">editar</button>
+  <a href="{% url 'home' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
