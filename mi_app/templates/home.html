@@ -40,7 +40,10 @@
                 <!-- Barra de búsqueda con dropdown -->
                 <div class="position-relative me-auto search-bar-container festival-searchbar" style="min-width: 320px;">
                     <div class="input-group">
+                        <!-- Botón agregar banda -->
+                        {% if rol == 'admin' %}
                         <a href="{% url 'crear_banda' %}" class="btn btn-gold input-group-text" id="addBandBtn">➕</a>
+                        {% endif %}
                         <input type="text" class="form-control" id="searchInput" name="q" value="{{ query }}" placeholder="Buscar Artista" autocomplete="off">
                     </div>
                     <ul class="dropdown-menu w-100 mt-1 festival-dropdown" id="bandDropdown" style="max-height: 350px; overflow-y: auto;">
@@ -51,8 +54,11 @@
                                         {{ banda.nombre }}
                                     </a>
                                     <span>
-                                        <a href="{% url 'editar_banda' banda.id %}" class="btn btn-sm btn-warning ms-2">Editar</a>
-                                        <a href="{% url 'eliminar_banda' banda.id %}" class="btn btn-sm btn-danger ms-1">Eliminar</a>
+                                        <!-- Botones editar y eliminar en cada banda -->
+                                        {% if rol == 'admin' %}
+                                            <a href="{% url 'editar_banda' banda.id %}" class="btn btn-sm btn-warning ms-2">Editar</a>
+                                            <a href="{% url 'eliminar_banda' banda.id %}" class="btn btn-sm btn-danger ms-1">Eliminar</a>
+                                        {% endif %}
                                     </span>
                                 </div>
                             </li>

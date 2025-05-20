@@ -85,11 +85,16 @@ def home(request):
         except BandaPop.DoesNotExist:
             banda_detalle = None
 
+    rol = None
+    if hasattr(request.user, 'perfil'):
+        rol = request.user.perfil.rol
+
     return render(request, 'home.html', {
         'page_obj': page_obj,
         'query': query,
         'banda_detalle': banda_detalle,
         'comentarios': comentarios,
+        'rol': rol,
     })
 
 
