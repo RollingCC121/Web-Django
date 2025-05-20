@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 import re
-from .models import BandaPop
+from .models import BandaPop, Perfil
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 
@@ -35,11 +35,11 @@ def register_view(request):
         username = request.POST['username']
         password = request.POST['password']
 
-        # Verificar si el usuario ya existe
         if User.objects.filter(username=username).exists():
             messages.error(request, 'El nombre de usuario ya está en uso.')
         else:
-            User.objects.create_user(username=username, password=password)
+            user = User.objects.create_user(username=username, password=password)
+            Perfil.objects.create(user=user, rol='usuario')  # Por defecto usuario
             messages.success(request, 'Usuario creado exitosamente. Inicia sesión.')
             return redirect('login')
 
@@ -100,4 +100,7 @@ def eliminar_banda(request, banda_id):
         return redirect('home')
     return render(request, 'eliminar_banda.html', {'banda': banda})
 
-
+@login_required
+def detalle_banda(request, banda_id):
+    banda = get_object_or_404(BandaPop, id=banda_id)
+    return render(request, 'detalle_banda.html', {'banda': banda})

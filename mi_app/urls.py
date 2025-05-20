@@ -11,5 +11,6 @@ urlpatterns = [
     path('register/', views.register_view, name='register'),
     path('crear/', views.crear_banda, name='crear_banda'),
     path('editar/<int:banda_id>/', views.editar_banda, name='editar_banda'),
-    path('eliminar/<int:banda_id>/', views.eliminar_banda, name='eliminar_banda')
+    path('eliminar/<int:banda_id>/', views.eliminar_banda, name='eliminar_banda'),
+    path('banda/<int:banda_id>/', views.detalle_banda, name='detalle_banda')
 ]
