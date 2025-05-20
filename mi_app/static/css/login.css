@@ -1,0 +1,98 @@
+:root {
+    --festival-purple: #7c3aed;
+    --festival-purple-dark: #5b21b6;
+    --festival-purple-light: #ede9fe;
+    --festival-gold: #ffd700;
+    --festival-gold-dark: #bfa100;
+    --festival-bg: #f8f5ff;
+    --festival-white: #fff;
+}
+
+body, .festival-bg {
+    background: linear-gradient(135deg, var(--festival-purple-light) 0%, var(--festival-bg) 100%);
+    min-height: 100vh;
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.logo {
+    color: var(--festival-gold);
+    font-size: 2.2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 8px var(--festival-purple-dark);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+    text-align: center;
+}
+
+.festival-form-container {
+    background: var(--festival-white);
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(124,58,237,0.10);
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2.5rem 2rem 2rem 2rem;
+    border: 2px solid var(--festival-gold);
+}
+
+.festival-form-container h2 {
+    color: var(--festival-purple);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    text-shadow: 1px 1px 8px var(--festival-gold);
+}
+
+.festival-form-container label {
+    color: var(--festival-purple-dark);
+    font-weight: 500;
+}
+
+.festival-form-container input[type="text"],
+.festival-form-container input[type="password"],
+.festival-form-container input[type="email"] {
+    border-radius: 20px;
+    border: 1.5px solid var(--festival-purple);
+    padding: 0.7rem 1.2rem;
+    margin-bottom: 1.2rem;
+    background: var(--festival-purple-light);
+    color: var(--festival-purple-dark);
+    font-size: 1rem;
+    width: 100%;
+    transition: border 0.2s;
+}
+
+.festival-form-container input:focus {
+    border-color: var(--festival-gold);
+    outline: none;
+}
+
+.festival-form-container .btn-festival,
+.festival-form-container button[type="submit"] {
+    background: var(--festival-gold);
+    color: var(--festival-purple-dark);
+    border: none;
+    border-radius: 25px;
+    padding: 0.7rem 2.2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 0.5rem;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(124,58,237,0.10);
+}
+.festival-form-container .btn-festival:hover,
+.festival-form-container button[type="submit"]:hover {
+    background: var(--festival-gold-dark);
+    color: var(--festival-white);
+    box-shadow: 0 4px 16px rgba(124,58,237,0.20);
+}
+
+.festival-form-container .form-text,
+.festival-form-container .errorlist {
+    color: #e11d48;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
