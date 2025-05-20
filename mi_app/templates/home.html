@@ -16,6 +16,7 @@
     <div class="banner-lateral banner-lateral-der">
         <img id="bannerDerImg" src="{% static 'img/banner2.jpg' %}" alt="Banner Derecho">
     </div>
+
     <!-- Sticky Navbar con barra de búsqueda y dropdown -->
     <nav class="navbar navbar-expand-lg shadow-sm sticky-top custom-navbar festival-navbar">
         <div class="container-fluid">
@@ -46,7 +47,9 @@
                         {% for banda in page_obj %}
                             <li>
                                 <div class="dropdown-item d-flex justify-content-between align-items-center">
-                                    <span>{{ banda.nombre }}</span>
+                                    <a href="?banda_id={{ banda.id }}{% if query %}&q={{ query }}{% endif %}" class="text-decoration-none text-dark flex-grow-1">
+                                        {{ banda.nombre }}
+                                    </a>
                                     <span>
                                         <a href="{% url 'editar_banda' banda.id %}" class="btn btn-sm btn-warning ms-2">Editar</a>
                                         <a href="{% url 'eliminar_banda' banda.id %}" class="btn btn-sm btn-danger ms-1">Eliminar</a>
@@ -96,9 +99,39 @@
     <!-- Título principal -->
     <div class="container text-center mb-4 mt-4">
         <h1 class="main-title festival-title">¡Vive la Experiencia PopFestivalHub!</h1>
-        <p class="festival-subtitle">Descubre, organiza y vive los mejores festivales de música pop alrededor del mundo.</p>
     </div>
 
+    {% if banda_detalle %}
+    <div class="container my-4">
+        <div class="card mx-auto" style="max-width: 600px;">
+            <div class="card-body">
+                <h3 class="card-title">{{ banda_detalle.nombre }}</h3>
+                <!-- Mostrar la descripción de la banda -->
+                <p class="card-text mb-4">{{ banda_detalle.descripcion }}</p>
+
+                <!-- Caja de comentarios -->
+                <form method="post" action="?banda_id={{ banda_detalle.id }}{% if query %}&q={{ query }}{% endif %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <textarea class="form-control" id="comentario" name="comentario" rows="3" placeholder="Escribe tu comentario aquí..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-gold">Guardar</button>
+                </form>
+
+                <!-- Mostrar comentarios guardados -->
+                {% if comentarios %}
+                    <hr>
+                    <h5>Comentarios:</h5>
+                    <ul class="list-group">
+                        {% for comentario in comentarios %}
+                            <li class="list-group-item">{{ comentario.texto }} <span class="text-muted" style="font-size:0.9em;">- {{ comentario.usuario.username }}</span></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

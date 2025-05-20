@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 import re
-from .models import BandaPop, Perfil
+from .models import BandaPop, Perfil, Comentario
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 
@@ -52,8 +52,11 @@ import re
 def home(request):
     query = request.GET.get('q', '')
     page_number = request.GET.get('page')
+    banda_id = request.GET.get('banda_id')
 
     bandas = BandaPop.objects.all()
+    banda_detalle = None
+    comentarios = []
 
     if query:
         try:
@@ -61,14 +64,32 @@ def home(request):
             bandas = [b for b in bandas if regex.search(b.nombre)]
         except re.error:
             bandas = []
-            messages.error(request, 'Expresión regular inválida')
 
-    paginator = Paginator(bandas, 10)  # 10 bandas por página
+    paginator = Paginator(bandas, 10)
     page_obj = paginator.get_page(page_number)
+
+    if banda_id:
+        try:
+            banda_detalle = BandaPop.objects.get(id=banda_id)
+            # Guardar comentario si es POST
+            if request.method == 'POST':
+                texto = request.POST.get('comentario')
+                if texto:
+                    Comentario.objects.create(
+                        banda=banda_detalle,
+                        usuario=request.user,
+                        texto=texto
+                    )
+            # Obtener comentarios actualizados
+            comentarios = banda_detalle.comentarios.select_related('usuario').order_by('-fecha')
+        except BandaPop.DoesNotExist:
+            banda_detalle = None
 
     return render(request, 'home.html', {
         'page_obj': page_obj,
         'query': query,
+        'banda_detalle': banda_detalle,
+        'comentarios': comentarios,
     })
 
 
