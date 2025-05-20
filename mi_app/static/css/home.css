@@ -1,0 +1,197 @@
+/* Paleta festival */
+:root {
+    --festival-purple: #7c3aed;
+    --festival-purple-dark: #5b21b6;
+    --festival-purple-light: #ede9fe;
+    --festival-gold: #ffd700;
+    --festival-gold-dark: #bfa100;
+    --festival-bg: #f8f5ff;
+    --festival-white: #fff;
+}
+
+/* Fondo general */
+.festival-bg {
+    background: linear-gradient(135deg, var(--festival-purple-light) 0%, var(--festival-bg) 100%);
+    min-height: 100vh;
+}
+
+/* Navbar */
+.festival-navbar {
+    background: linear-gradient(90deg, var(--festival-purple) 70%, var(--festival-gold) 100%) !important;
+    border-bottom: 3px solid var(--festival-gold);
+    box-shadow: 0 4px 16px rgba(124,58,237,0.10);
+}
+
+.festival-logo {
+    color: var(--festival-gold) !important;
+    font-size: 2rem;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 8px var(--festival-purple-dark);
+}
+
+.festival-navbar .nav-link {
+    color: var(--festival-white) !important;
+    font-weight: 500;
+    margin-right: 10px;
+    transition: color 0.2s;
+}
+.festival-navbar .nav-link:hover,
+.festival-navbar .nav-link.active {
+    color: var(--festival-gold) !important;
+}
+
+.festival-user {
+    color: var(--festival-gold);
+    font-weight: 500;
+    text-shadow: 1px 1px 4px var(--festival-purple-dark);
+}
+
+.btn-outline-gold {
+    color: var(--festival-gold);
+    border-color: var(--festival-gold);
+}
+.btn-outline-gold:hover {
+    background: var(--festival-gold);
+    color: var(--festival-purple-dark);
+    border-color: var(--festival-gold-dark);
+}
+
+/* Search bar */
+.festival-searchbar .input-group {
+    box-shadow: 0 2px 8px rgba(124,58,237,0.10);
+}
+#addBandBtn,
+.btn-gold {
+    background: var(--festival-gold);
+    color: var(--festival-purple-dark);
+    border: none;
+    border-top-left-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+#addBandBtn:hover,
+.btn-gold:hover {
+    background: var(--festival-gold-dark);
+    color: var(--festival-white);
+}
+#searchInput {
+    border-top-right-radius: 20px !important;
+    border-bottom-right-radius: 20px !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border: 1px solid var(--festival-purple);
+    background: var(--festival-white);
+}
+
+/* Dropdown */
+.festival-dropdown {
+    background: var(--festival-white);
+    border: 2px solid var(--festival-gold);
+    box-shadow: 0 4px 16px rgba(124,58,237,0.10);
+}
+.festival-dropdown .dropdown-item {
+    color: var(--festival-purple-dark);
+    font-weight: 500;
+}
+.festival-dropdown .dropdown-item:hover {
+    background: var(--festival-purple-light);
+    color: var(--festival-gold);
+}
+.festival-dropdown .btn-warning,
+.festival-dropdown .btn-danger {
+    font-size: 0.85rem;
+    padding: 2px 8px;
+}
+
+/* Título y subtítulo */
+.festival-title {
+    color: var(--festival-purple);
+    font-size: 2.7rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 8px var(--festival-gold);
+}
+.festival-subtitle {
+    color: var(--festival-gold);
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 8px var(--festival-purple-dark);
+}
+
+/* Lista de bandas */
+.festival-list .list-group-item {
+    background: var(--festival-white);
+    border: 1px solid var(--festival-purple-light);
+    color: var(--festival-purple-dark);
+    font-weight: 500;
+}
+.festival-list .btn-warning {
+    background: var(--festival-gold);
+    color: var(--festival-purple-dark);
+    border: none;
+}
+.festival-list .btn-danger {
+    background: #e11d48;
+    color: var(--festival-white);
+    border: none;
+}
+
+/* Paginación */
+.pagination .page-link {
+    color: var(--festival-purple);
+    border: 1px solid var(--festival-gold);
+    background: var(--festival-white);
+}
+.pagination .page-item.active .page-link,
+.pagination .page-link:hover {
+    background: var(--festival-gold);
+    color: var(--festival-purple-dark);
+    border-color: var(--festival-gold-dark);
+}
+
+/* Banner lateral */
+.banner-lateral {
+    position: fixed;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(124,58,237,0.10);
+    border-radius: 0 20px 20px 0;
+    box-shadow: 0 4px 24px rgba(124,58,237,0.10);
+    overflow: hidden;
+}
+.banner-lateral-izq {
+    left: 0;
+    border-radius: 0 20px 20px 0;
+}
+.banner-lateral-der {
+    right: 0;
+    border-radius: 20px 0 0 20px;
+}
+.banner-lateral img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    transition: opacity 0.5s;
+}
+@media (max-width: 1200px) {
+    .banner-lateral {
+        display: none;
+    }
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .festival-navbar .navbar-nav {
+        margin-bottom: 1rem;
+    }
+    .festival-searchbar {
+        margin-top: 1rem;
+    }
+}
