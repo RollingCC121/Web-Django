@@ -9,6 +9,9 @@ from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 
 
+def lobby_view(request):
+    return render(request, 'lobby.html')
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']

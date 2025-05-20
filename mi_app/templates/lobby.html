@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenido a PopFestivalHub</title>
+    <link rel="stylesheet" href="{% static 'css/lobby.css' %}">
+</head>
+<body>
+    <div class="logo">🎤 PopFestivalHub</div>
+    <h1>¡Bienvenido a la fiesta!</h1>
+    <p>Descubre, organiza y vive los mejores festivales de música pop alrededor del mundo. Tu aventura pop comienza aquí.</p>
+    <div class="botones">
+        <a href="{% url 'login' %}">Iniciar Sesión</a>
+        <a href="{% url 'register' %}">Registrarse</a>
+    </div>
+</body>
+</html>

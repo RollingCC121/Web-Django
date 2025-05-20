@@ -3,7 +3,8 @@ from . import views
 from django.shortcuts import redirect
 
 urlpatterns = [
-    path('', lambda request: redirect('login')),
+    path('', lambda request: redirect('lobby')),
+    path('lobby/', views.lobby_view, name='lobby'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('home/', views.home, name='home'),
