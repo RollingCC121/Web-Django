@@ -152,3 +152,15 @@ def perfil_usuario(request):
         perfil.save()
         return redirect('perfil_usuario')
     return render(request, 'perfil_usuario.html', {'perfil': perfil})
+
+@login_required
+def contacto(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        email = request.POST.get('email')
+        mensaje = request.POST.get('mensaje')
+        # Aquí puedes guardar el mensaje en la base de datos o enviarlo por email
+        # Por ejemplo, solo mostramos un mensaje de éxito:
+        messages.success(request, '¡Gracias por contactarnos! Te responderemos pronto.')
+        return redirect('home')
+    return redirect('home')

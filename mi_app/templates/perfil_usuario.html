@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static 'css/perfil_usuario.css' %}">
 </head>
 <body class="festival-bg">
-    <!-- Navbar sticky -->
+<!-- Sticky Navbar con barra de búsqueda y dropdown -->
     <nav class="navbar navbar-expand-lg shadow-sm sticky-top custom-navbar festival-navbar">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold festival-logo" href="{% url 'home' %}">🎤 PopFestivalHub</a>
@@ -20,17 +20,17 @@
             <div class="collapse navbar-collapse festival-navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-3 mb-2 mb-lg-0 festival-menu">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Inicio</a>
+                        <a class="nav-link" href="{% url 'home' %}#top">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Festivales</a>
+                        <a class="nav-link" href="{% url 'home' %}#festival">Festivales</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'perfil_usuario' %}">Perfil</a>
+                        <a class="nav-link" href="{% url 'home' %}#contacto">Contacto</a>
                     </li>
                 </ul>
                 <span class="navbar-text me-3 ms-2 festival-user">
-                    Hola, <strong>{{ request.user.username }}</strong> 👋
+                    Hola, <strong>{{ request.user.perfil.nickname|default:request.user.username }}</strong> 👋
                 </span>
                 <a href="{% url 'logout' %}" class="btn btn-outline-gold btn-sm ms-2">Cerrar sesión</a>
             </div>

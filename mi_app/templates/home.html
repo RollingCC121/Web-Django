@@ -28,13 +28,16 @@
             <div class="collapse navbar-collapse festival-navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-3 mb-2 mb-lg-0 festival-menu">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Inicio</a>
+                        <a class="nav-link" href="#top">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Festivales</a>
+                        <a class="nav-link" href="#festival">Festivales</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'perfil_usuario' %}">Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacto">Contacto</a>
                     </li>
                 </ul>
                 <!-- Barra de búsqueda con dropdown -->
@@ -95,7 +98,7 @@
                     </ul>
                 </div>
                 <span class="navbar-text me-3 ms-2 festival-user">
-                    Hola, <strong>{{ request.user.username }}</strong> 👋
+                    Hola, <strong>{{ request.user.perfil.nickname|default:request.user.username }}</strong> 👋
                 </span>
                 <a href="{% url 'logout' %}" class="btn btn-outline-gold btn-sm ms-2">Cerrar sesión</a>
             </div>
@@ -192,7 +195,7 @@
     <div class="container my-5" id="contacto">
         <h2 class="text-center festival-title mb-4">Contacto</h2>
         <div class="row justify-content-center">
-            <div class="col-md-7 col-lg-6">
+            <div class="col-md-10 col-lg-9">
                 <form method="post" action="{% url 'contacto' %}" class="p-4 rounded shadow" style="background: #f5f5f5;">
                     {% csrf_token %}
                     <div class="mb-3">

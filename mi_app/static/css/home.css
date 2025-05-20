@@ -246,7 +246,7 @@
 
 /* Estilos para la casilla de detalle de banda */
 .festival-banda-detalle-card {
-    background: #8f7da4; /* gris claro */
+    background: #fffbe6; /* gris claro */
     border: 2px solid var(--festival-gold);
     border-radius: 18px;
     box-shadow: 0 4px 24px rgba(124,58,237,0.10);
@@ -287,4 +287,46 @@
     color: #222;
     border: none;
     border-bottom: 1px solid #ffe066;
+}
+
+/* Estilos para el formulario de contacto */
+#contacto form {
+    background: #f5f5f5;
+    border: 2px solid var(--festival-gold);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(124,58,237,0.10);
+    padding: 2rem 2rem 1.5rem 2rem;
+    max-width: 1000px;
+}
+
+#contacto .form-label {
+    color: #222;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.5px;
+}
+
+#contacto .form-control {
+    border-radius: 14px;
+    border: 2px solid #a084ca;
+    font-size: 1rem;
+    color: #222;
+    background: #fff;
+    margin-bottom: 0.7rem;
+    box-shadow: none;
+    transition: border-color 0.2s;
+}
+
+#contacto .form-control:focus {
+    border-color: var(--festival-gold);
+    box-shadow: 0 0 0 0.2rem rgba(255,215,0,0.10);
+    background: #fffbe6;
+}
+
+#contacto .btn-gold {
+    width: 100%;
+    border-radius: 14px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-top: 1rem;
 }
