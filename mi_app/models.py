@@ -25,6 +25,10 @@ class Perfil(models.Model):
         ('usuario', 'Usuario'),
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nickname = models.CharField(max_length=50, blank=True)
+    biografia = models.TextField(blank=True)
+    region = models.CharField(max_length=100, blank=True)
+    fecha_nacimiento = models.DateField(null=True, blank=True)
     rol = models.CharField(max_length=10, choices=ROLES, default='usuario')
 
     def __str__(self):

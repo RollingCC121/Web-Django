@@ -10,11 +10,8 @@
 }
 
 /* Fondo general */
-body.festival-bg {
-    background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
-}
 .festival-bg {
-    background: linear-gradient(135deg, var(--festival-purple-light) 0%, var(--festival-bg) 100%);
+    background: linear-gradient(135deg, #656383 0%, #d9c528 100%);
     min-height: 100vh;
 }
 
@@ -109,15 +106,14 @@ body.festival-bg {
 
 /* Título y subtítulo */
 .festival-title {
-    color: #7c3aed;
-    font-weight: bold;
-    letter-spacing: 1px;
+    color: var(--festival-purple);
     font-size: 2.7rem;
+    font-weight: bold;
     text-shadow: 1px 1px 8px var(--festival-gold);
 }
 .festival-subtitle {
-    color: #a084ca;
-    font-size: 1.1rem;
+    color: var(--festival-gold);
+    font-size: 1.2rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
     text-shadow: 1px 1px 8px var(--festival-purple-dark);
@@ -125,9 +121,9 @@ body.festival-bg {
 
 /* Lista de bandas */
 .festival-list .list-group-item {
-    background: #f8f5ff;
+    background: var(--festival-white);
     border: 1px solid var(--festival-purple-light);
-    color: #222;
+    color: var(--festival-purple-dark);
     font-weight: 500;
 }
 .festival-list .btn-warning {
@@ -184,55 +180,58 @@ body.festival-bg {
     border-radius: inherit;
     transition: opacity 0.5s;
 }
+#festival {
+    padding-left: 120px;  /* Ajusta este valor al ancho real de tu banner izquierdo */
+    padding-right: 120px; /* Ajusta este valor al ancho real de tu banner derecho */
+}
 @media (max-width: 1200px) {
+    #festival {
+        padding-left: 0;
+        padding-right: 0;
+    }
     .banner-lateral {
         display: none;
     }
 }
 
-/* Cards */
-.festival-card {
-    background: rgba(155, 89, 182, 0.10);
-    border: 2px solid #a084ca;
-    border-radius: 18px;
-    box-shadow: 0 4px 24px rgba(124,58,237,0.10);
-}
-.festival-card .card-title {
-    color: #7c3aed;
-    font-weight: bold;
-    font-size: 1.6rem;
-}
-.festival-card .card-text {
-    color: #222;
-    font-size: 1rem;
-}
-.festival-comentario-autor {
-    color: #a084ca;
-    font-size: 0.95em;
-}
-.festival-card .list-group-item {
-    background: #f8f5ff;
-    color: #222;
-    border: none;
-    border-bottom: 1px solid #e0c3fc;
+/* Estilos para las imágenes del carousel */
+#festival .carousel-inner img {
+    width: 1200px;         /* Ajusta el tamaño que prefieras para el carousel */
+    height: 550px;
+    max-width: 100%;
+    max-height: 550px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
-/* Botones */
-.btn-gold {
-    background: linear-gradient(90deg, #ffd700 0%, #ffe066 100%);
-    color: #222;
-    border: none;
-    font-weight: bold;
-}
-.btn-gold:hover {
-    background: linear-gradient(90deg, #ffe066 0%, #ffd700 100%);
-    color: #7c3aed;
+/* Limita el ancho de la galería para que no se superpongan con los banners */
+.festival-gallery-img {
+    width: 470px;
+    height: 500px;
+    max-width: 470px;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
-/* Formularios */
-.form-control:focus {
-    border-color: #a084ca;
-    box-shadow: 0 0 0 0.2rem rgba(124,58,237,0.15);
+/* Centra las imágenes en su columna */
+#festival .col-6 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Opcional: en pantallas grandes, limita el ancho total del festival */
+#festival {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Responsive */
@@ -243,4 +242,49 @@ body.festival-bg {
     .festival-searchbar {
         margin-top: 1rem;
     }
+}
+
+/* Estilos para la casilla de detalle de banda */
+.festival-banda-detalle-card {
+    background: #8f7da4; /* gris claro */
+    border: 2px solid var(--festival-gold);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(124,58,237,0.10);
+    max-width: 950px;
+    margin: 2rem auto;
+    padding: 2rem 2rem 1.5rem 2rem;
+}
+
+.festival-banda-detalle-card .card-title {
+    color: var(--festival-purple);
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.festival-banda-detalle-card .card-text {
+    color: #222;
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+}
+
+.festival-banda-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid var(--festival-gold);
+    margin-right: 1rem;
+}
+
+.festival-banda-detalle-card .comentario-autor {
+    color: var(--festival-purple);
+    font-size: 0.95em;
+}
+
+.festival-banda-detalle-card .list-group-item {
+    background: #fffbe6;
+    color: #222;
+    border: none;
+    border-bottom: 1px solid #ffe066;
 }

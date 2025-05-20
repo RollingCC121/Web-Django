@@ -1,0 +1,85 @@
+/* Centrado vertical y horizontal */
+.perfil-centrado-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+}
+
+/* Card de perfil */
+.perfil-card {
+    background: rgba(155, 89, 182, 0.13);
+    border: 2px solid #a084ca;
+    border-radius: 22px;
+    box-shadow: 0 6px 32px rgba(124,58,237,0.13);
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+    max-width: 420px;
+    width: 100%;
+}
+
+.perfil-title {
+    color: #222; 
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.perfil-label {
+    color: #222; /* negro */
+    font-weight: 600;
+    font-size: 1.08rem;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.5px;
+}
+
+.perfil-form .form-control {
+    border-radius: 20px;
+    border: 2px solid #a084ca;
+    font-size: 1.07rem;
+    color: #222; /* negro */
+    background: #f8f5ff;
+    margin-bottom: 0.7rem;
+    box-shadow: none;
+    transition: border-color 0.2s;
+}
+
+.perfil-form .form-control:focus {
+    border-color: #ffd700;
+    box-shadow: 0 0 0 0.2rem rgba(124,58,237,0.10);
+    background: #fffbe6;
+    color: #222; /* negro */
+}
+
+.perfil-btn {
+    background: linear-gradient(90deg, #ffd700 0%, #ffe066 100%);
+    color: #222; /* negro */
+    border: none;
+    font-weight: bold;
+    border-radius: 20px;
+    padding: 0.6rem 2.2rem;
+    margin-top: 1.2rem;
+    box-shadow: 0 2px 8px rgba(124,58,237,0.08);
+    transition: background 0.2s, color 0.2s;
+}
+
+.perfil-btn:hover {
+    background: linear-gradient(90deg, #ffe066 0%, #ffd700 100%);
+    color: #222; /* negro */
+}
+
+.perfil-form .mb-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.perfil-form .perfil-label,
+.perfil-form .form-control {
+    text-align: center;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}

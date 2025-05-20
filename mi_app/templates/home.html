@@ -34,7 +34,7 @@
                         <a class="nav-link" href="#">Festivales</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Perfil</a>
+                        <a class="nav-link" href="{% url 'perfil_usuario' %}">Perfil</a>
                     </li>
                 </ul>
                 <!-- Barra de búsqueda con dropdown -->
@@ -109,11 +109,11 @@
 
     {% if banda_detalle %}
     <div class="container my-4">
-        <div class="card mx-auto" style="max-width: 600px;">
+        <div class="card festival-banda-detalle-card">
             <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
                     {% if banda_detalle.imagen %}
-                        <img src="{{ banda_detalle.imagen.url }}" alt="{{ banda_detalle.nombre }}" class="me-3" style="width:80px; height:80px; object-fit:cover; border-radius:10px;">
+                        <img src="{{ banda_detalle.imagen.url }}" alt="{{ banda_detalle.nombre }}" class="festival-banda-img me-3">
                     {% endif %}
                     <h3 class="card-title mb-0">{{ banda_detalle.nombre }}</h3>
                 </div>
@@ -143,6 +143,75 @@
         </div>
     </div>
     {% endif %}
+
+
+    <!-- Sección Festival -->
+    <div class="container my-5" id="festival">
+        <h2 class="text-center festival-title mb-4">Festival</h2>
+
+        <!-- Banner rotativo (carousel) -->
+        <div id="festivalCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'img/festival1.jpeg' %}" class="d-block w-120 rounded" alt="Festival 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/festival2.jpeg' %}" class="d-block w-120 rounded" alt="Festival 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/festival3.jpeg' %}" class="d-block w-120 rounded" alt="Festival 3">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#festivalCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#festivalCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+
+        <!-- Galería de imágenes -->
+        <div class="row g-3 justify-content-center">
+            <div class="col-6 col-md-6">
+                <img src="{% static 'img/galeria1.jpg' %}" class="img-fluid rounded shadow festival-gallery-img" alt="Galería 1">
+            </div>
+            <div class="col-6 col-md-6">
+                <img src="{% static 'img/galeria2.jpg' %}" class="img-fluid rounded shadow festival-gallery-img" alt="Galería 2">
+            </div>
+            <div class="col-6 col-md-6">
+                <img src="{% static 'img/galeria3.jpg' %}" class="img-fluid rounded shadow festival-gallery-img" alt="Galería 3">
+            </div>
+            <div class="col-6 col-md-6">
+                <img src="{% static 'img/galeria4.jpg' %}" class="img-fluid rounded shadow festival-gallery-img" alt="Galería 4">
+            </div>
+            <!-- Agrega más imágenes si lo deseas -->
+        </div>
+    </div>
+
+    <!-- Formulario de Contacto -->
+    <div class="container my-5" id="contacto">
+        <h2 class="text-center festival-title mb-4">Contacto</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-6">
+                <form method="post" action="{% url 'contacto' %}" class="p-4 rounded shadow" style="background: #f5f5f5;">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label" style="color:#222;">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label" style="color:#222;">Correo electrónico</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mensaje" class="form-label" style="color:#222;">Mensaje</label>
+                        <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-gold w-100">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
