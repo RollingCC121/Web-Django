@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 class BandaPop(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True, null=True)
+    imagen = models.ImageField(upload_to='bandas/', blank=True, null=True)
 
 
     def __str__(self):

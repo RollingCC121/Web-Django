@@ -111,7 +111,12 @@
     <div class="container my-4">
         <div class="card mx-auto" style="max-width: 600px;">
             <div class="card-body">
-                <h3 class="card-title">{{ banda_detalle.nombre }}</h3>
+                <div class="d-flex align-items-center mb-3">
+                    {% if banda_detalle.imagen %}
+                        <img src="{{ banda_detalle.imagen.url }}" alt="{{ banda_detalle.nombre }}" class="me-3" style="width:80px; height:80px; object-fit:cover; border-radius:10px;">
+                    {% endif %}
+                    <h3 class="card-title mb-0">{{ banda_detalle.nombre }}</h3>
+                </div>
                 <!-- Mostrar la descripción de la banda -->
                 <p class="card-text mb-4">{{ banda_detalle.descripcion }}</p>
 
