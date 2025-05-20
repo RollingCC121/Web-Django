@@ -14,7 +14,6 @@ urlpatterns = [
     path('crear/', views.crear_banda, name='crear_banda'),
     path('editar/<int:banda_id>/', views.editar_banda, name='editar_banda'),
     path('eliminar/<int:banda_id>/', views.eliminar_banda, name='eliminar_banda'),
-]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('perfil/', views.perfil_usuario, name='perfil_usuario'),
+    path('contacto/', views.contacto, name='contacto'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
