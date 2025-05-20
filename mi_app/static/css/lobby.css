@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, #ff8ae2, #a88beb);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.logo {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 2px 2px 6px #00000066;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px #aa00aa;
+}
+
+p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    max-width: 600px;
+}
+
+.botones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.botones a {
+    padding: 12px 30px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1em;
+    color: #fff;
+    background: #ff4081;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.botones a:hover {
+    background: #e91e63;
+    transform: scale(1.05);
+}
+
+/* 🧠 Responsive para pantallas pequeñas */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    p {
+        font-size: 1em;
+        padding: 0 10px;
+    }
+
+    .botones a {
+        width: 100%;
+        text-align: center;
+        font-size: 1em;
+    }
+}
