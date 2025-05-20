@@ -10,6 +10,9 @@
 }
 
 /* Fondo general */
+body.festival-bg {
+    background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+}
 .festival-bg {
     background: linear-gradient(135deg, var(--festival-purple-light) 0%, var(--festival-bg) 100%);
     min-height: 100vh;
@@ -106,14 +109,15 @@
 
 /* Título y subtítulo */
 .festival-title {
-    color: var(--festival-purple);
-    font-size: 2.7rem;
+    color: #7c3aed;
     font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 2.7rem;
     text-shadow: 1px 1px 8px var(--festival-gold);
 }
 .festival-subtitle {
-    color: var(--festival-gold);
-    font-size: 1.2rem;
+    color: #a084ca;
+    font-size: 1.1rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
     text-shadow: 1px 1px 8px var(--festival-purple-dark);
@@ -121,9 +125,9 @@
 
 /* Lista de bandas */
 .festival-list .list-group-item {
-    background: var(--festival-white);
+    background: #f8f5ff;
     border: 1px solid var(--festival-purple-light);
-    color: var(--festival-purple-dark);
+    color: #222;
     font-weight: 500;
 }
 .festival-list .btn-warning {
@@ -184,6 +188,51 @@
     .banner-lateral {
         display: none;
     }
+}
+
+/* Cards */
+.festival-card {
+    background: rgba(155, 89, 182, 0.10);
+    border: 2px solid #a084ca;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(124,58,237,0.10);
+}
+.festival-card .card-title {
+    color: #7c3aed;
+    font-weight: bold;
+    font-size: 1.6rem;
+}
+.festival-card .card-text {
+    color: #222;
+    font-size: 1rem;
+}
+.festival-comentario-autor {
+    color: #a084ca;
+    font-size: 0.95em;
+}
+.festival-card .list-group-item {
+    background: #f8f5ff;
+    color: #222;
+    border: none;
+    border-bottom: 1px solid #e0c3fc;
+}
+
+/* Botones */
+.btn-gold {
+    background: linear-gradient(90deg, #ffd700 0%, #ffe066 100%);
+    color: #222;
+    border: none;
+    font-weight: bold;
+}
+.btn-gold:hover {
+    background: linear-gradient(90deg, #ffe066 0%, #ffd700 100%);
+    color: #7c3aed;
+}
+
+/* Formularios */
+.form-control:focus {
+    border-color: #a084ca;
+    box-shadow: 0 0 0 0.2rem rgba(124,58,237,0.15);
 }
 
 /* Responsive */

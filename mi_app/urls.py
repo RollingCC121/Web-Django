@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 from django.shortcuts import redirect
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', lambda request: redirect('lobby')),
@@ -13,3 +15,6 @@ urlpatterns = [
     path('editar/<int:banda_id>/', views.editar_banda, name='editar_banda'),
     path('eliminar/<int:banda_id>/', views.eliminar_banda, name='eliminar_banda'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
