@@ -67,7 +67,7 @@ def home(request):
     page_number = request.GET.get('page')
     banda_id = request.GET.get('banda_id')
 
-    bandas = BandaPop.objects.all()
+    bandas = BandaPop.objects.all().order_by('-id')
     banda_detalle = None
     comentarios = []
 
@@ -115,10 +115,13 @@ def home(request):
 def crear_banda(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        imagen = request.FILES.get('imagen')
         if nombre:
-            BandaPop.objects.create(nombre=nombre)
+            BandaPop.objects.create(nombre=nombre, descripcion=descripcion, imagen=imagen)
             return redirect('home')
-    return render(request, 'crear_banda.html')
+        # Si falta el nombre, puedes mostrar un mensaje de error
+    return redirect('home')
 
 @login_required
 def editar_banda(request, banda_id):

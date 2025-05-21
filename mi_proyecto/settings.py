@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+import sentry_sdk
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -136,3 +137,10 @@ LOGOUT_REDIRECT_URL = 'login'
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = ['https://web-django-production.up.railway.app']
+
+sentry_sdk.init(
+    dsn="https://e0de0e17406e13cdce7b9e2633bb577f@o4509361784750080.ingest.us.sentry.io/4509361832067072",
+    # Add data like request headers and IP for users,
+    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+    send_default_pii=True,
+)

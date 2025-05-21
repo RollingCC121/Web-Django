@@ -305,4 +305,22 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         };
     }
+
+    // Delegación para paginación AJAX en el dropdown
+    document.getElementById('bandDropdown').addEventListener('click', function(e) {
+        if (e.target.classList.contains('dropdown-page-link')) {
+            e.preventDefault();
+            const page = e.target.getAttribute('data-page');
+            const query = e.target.getAttribute('data-query') || '';
+            fetch(`/bandas/dropdown_ajax/?page=${page}&q=${encodeURIComponent(query)}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(r => r.json())
+            .then(data => {
+                bandDropdown.innerHTML = data.html;
+            });
+        }
+    });
 });

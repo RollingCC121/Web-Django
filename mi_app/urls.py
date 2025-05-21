@@ -4,6 +4,10 @@ from django.shortcuts import redirect
 from django.conf import settings
 from django.conf.urls.static import static
 
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
+
 urlpatterns = [
     path('', lambda request: redirect('lobby')),
     path('lobby/', views.lobby_view, name='lobby'),
@@ -21,4 +25,5 @@ urlpatterns = [
     path('comentario/editar_ajax/<int:comentario_id>/', views.editar_comentario_ajax, name='editar_comentario_ajax'),
     path('banda/editar_nombre/<int:banda_id>/', views.editar_banda_nombre, name='editar_banda_nombre'),
     path('banda/editar_desc/<int:banda_id>/', views.editar_banda_desc, name='editar_banda_desc'),
+     path('sentry-debug/', trigger_error),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -46,7 +46,7 @@
                     <div class="input-group">
                         <!-- Botón agregar banda -->
                         {% if rol == 'admin' %}
-                        <a href="{% url 'crear_banda' %}" class="btn btn-gold input-group-text" id="addBandBtn">➕</a>
+                        <a href="#" class="btn btn-gold input-group-text" id="addBandBtn" data-bs-toggle="modal" data-bs-target="#modalAgregarBanda">➕</a>
                         {% endif %}
                         <input type="text" class="form-control" id="searchInput" name="q" value="{{ query }}" placeholder="Buscar Artista" autocomplete="off">
                     </div>
