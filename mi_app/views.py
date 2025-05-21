@@ -7,6 +7,8 @@ import re
 from .models import BandaPop, Perfil, Comentario
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 
 def lobby_view(request):
@@ -65,7 +67,7 @@ def home(request):
     page_number = request.GET.get('page')
     banda_id = request.GET.get('banda_id')
 
-    bandas = BandaPop.objects.all()
+    bandas = BandaPop.objects.all().order_by('-id')
     banda_detalle = None
     comentarios = []
 
@@ -113,10 +115,13 @@ def home(request):
 def crear_banda(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        imagen = request.FILES.get('imagen')
         if nombre:
-            BandaPop.objects.create(nombre=nombre)
+            BandaPop.objects.create(nombre=nombre, descripcion=descripcion, imagen=imagen)
             return redirect('home')
-    return render(request, 'crear_banda.html')
+        # Si falta el nombre, puedes mostrar un mensaje de error
+    return redirect('home')
 
 @login_required
 def editar_banda(request, banda_id):
@@ -128,6 +133,32 @@ def editar_banda(request, banda_id):
             banda.save()
             return redirect('home')
     return render(request, 'editar_banda.html', {'banda': banda})
+
+@login_required
+@require_POST
+def editar_banda_nombre(request, banda_id):
+    banda = get_object_or_404(BandaPop, id=banda_id)
+    if hasattr(request.user, 'perfil') and request.user.perfil.rol == 'admin':
+        nombre = request.POST.get('nombre', '').strip()
+        if nombre:
+            banda.nombre = nombre
+            banda.save()
+            return JsonResponse({'success': True, 'nombre': banda.nombre})
+        return JsonResponse({'success': False, 'error': 'Nombre vacío'}, status=400)
+    return JsonResponse({'success': False, 'error': 'No autorizado'}, status=403)
+
+@login_required
+@require_POST
+def editar_banda_desc(request, banda_id):
+    banda = get_object_or_404(BandaPop, id=banda_id)
+    if hasattr(request.user, 'perfil') and request.user.perfil.rol == 'admin':
+        descripcion = request.POST.get('descripcion', '').strip()
+        if descripcion:
+            banda.descripcion = descripcion
+            banda.save()
+            return JsonResponse({'success': True, 'descripcion': banda.descripcion})
+        return JsonResponse({'success': False, 'error': 'Descripción vacía'}, status=400)
+    return JsonResponse({'success': False, 'error': 'No autorizado'}, status=403)
 
 @login_required
 def eliminar_banda(request, banda_id):
@@ -164,3 +195,38 @@ def contacto(request):
         messages.success(request, '¡Gracias por contactarnos! Te responderemos pronto.')
         return redirect('home')
     return redirect('home')
+
+@login_required
+def editar_comentario(request, comentario_id):
+    comentario = get_object_or_404(Comentario, id=comentario_id)
+    if request.user != comentario.usuario and request.user.perfil.rol != 'admin':
+        return redirect('home')
+    if request.method == 'POST':
+        comentario.texto = request.POST.get('comentario')
+        comentario.save()
+        return redirect('home')
+    return render(request, 'editar_comentario.html', {'comentario': comentario})
+
+@login_required
+def eliminar_comentario_ajax(request, comentario_id):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        comentario = get_object_or_404(Comentario, id=comentario_id)
+        if request.user == comentario.usuario or (hasattr(request.user, 'perfil') and request.user.perfil.rol == 'admin'):
+            comentario.delete()
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False, 'error': 'No autorizado'}, status=403)
+    return JsonResponse({'success': False, 'error': 'Método no permitido'}, status=405)
+
+@login_required
+def editar_comentario_ajax(request, comentario_id):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        comentario = get_object_or_404(Comentario, id=comentario_id)
+        if request.user == comentario.usuario or (hasattr(request.user, 'perfil') and request.user.perfil.rol == 'admin'):
+            texto = request.POST.get('texto', '').strip()
+            if texto:
+                comentario.texto = texto
+                comentario.save()
+                return JsonResponse({'success': True, 'texto': comentario.texto})
+            return JsonResponse({'success': False, 'error': 'Texto vacío'}, status=400)
+        return JsonResponse({'success': False, 'error': 'No autorizado'}, status=403)
+    return JsonResponse({'success': False, 'error': 'Método no permitido'}, status=405)

@@ -7,6 +7,7 @@
     <title>PopFestivalHub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
 </head>
 <body class="festival-bg">
     <!-- Banners laterales -->
@@ -45,29 +46,22 @@
                     <div class="input-group">
                         <!-- Botón agregar banda -->
                         {% if rol == 'admin' %}
-                        <a href="{% url 'crear_banda' %}" class="btn btn-gold input-group-text" id="addBandBtn">➕</a>
+                        <a href="#" class="btn btn-gold input-group-text" id="addBandBtn" data-bs-toggle="modal" data-bs-target="#modalAgregarBanda">➕</a>
                         {% endif %}
                         <input type="text" class="form-control" id="searchInput" name="q" value="{{ query }}" placeholder="Buscar Artista" autocomplete="off">
                     </div>
                     <ul class="dropdown-menu w-100 mt-1 festival-dropdown" id="bandDropdown" style="max-height: 350px; overflow-y: auto;">
                         {% for banda in page_obj %}
-                            <li>
-                                <div class="dropdown-item d-flex justify-content-between align-items-center">
-                                    <a href="?banda_id={{ banda.id }}{% if query %}&q={{ query }}{% endif %}" class="text-decoration-none text-dark flex-grow-1">
-                                        {{ banda.nombre }}
-                                    </a>
-                                    <span>
-                                        <!-- Botones editar y eliminar en cada banda -->
-                                        {% if rol == 'admin' %}
-                                            <a href="{% url 'editar_banda' banda.id %}" class="btn btn-sm btn-warning ms-2">Editar</a>
-                                            <a href="{% url 'eliminar_banda' banda.id %}" class="btn btn-sm btn-danger ms-1">Eliminar</a>
-                                        {% endif %}
-                                    </span>
-                                </div>
-                            </li>
-                        {% empty %}
-                            <li><span class="dropdown-item text-muted">No se encontraron bandas.</span></li>
-                        {% endfor %}
+    <li>
+        <div class="dropdown-item d-flex justify-content-between align-items-center">
+            <a href="?banda_id={{ banda.id }}{% if query %}&q={{ query }}{% endif %}" class="text-decoration-none text-dark flex-grow-1">
+                {{ banda.nombre }}
+            </a>
+        </div>
+    </li>
+{% empty %}
+    <li><span class="dropdown-item text-muted">No se encontraron bandas.</span></li>
+{% endfor %}
                         <li>
                             <div class="dropdown-item p-0">
                                 <nav>
@@ -118,11 +112,33 @@
                     {% if banda_detalle.imagen %}
                         <img src="{{ banda_detalle.imagen.url }}" alt="{{ banda_detalle.nombre }}" class="festival-banda-img me-3">
                     {% endif %}
-                    <h3 class="card-title mb-0">{{ banda_detalle.nombre }}</h3>
+                    <div>
+                        <h3 class="card-title mb-0" id="banda-nombre">{{ banda_detalle.nombre }}</h3>
+                        <p class="card-text mb-0" id="banda-descripcion">{{ banda_detalle.descripcion }}</p>
+                    </div>
+                    {% if rol == 'admin' %}
+                        <button type="button" class="btn btn-sm btn-warning ms-3" id="editar-banda-btn">Editar Banda</button>
+                        <form method="post" action="{% url 'eliminar_banda' banda_detalle.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-danger ms-2" onclick="return confirm('¿Seguro que deseas eliminar esta banda? Esta acción no se puede deshacer.');">Eliminar Banda</button>
+                        </form>
+                    {% endif %}
                 </div>
-                <!-- Mostrar la descripción de la banda -->
-                <p class="card-text mb-4">{{ banda_detalle.descripcion }}</p>
-
+                <!-- Formulario de edición inline oculto -->
+                {% if rol == 'admin' %}
+                <form id="form-editar-banda" style="display:none;" class="mb-3"
+                      data-url-nombre="{% url 'editar_banda_nombre' banda_detalle.id %}"
+                      data-url-desc="{% url 'editar_banda_desc' banda_detalle.id %}">
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" name="nuevo_nombre" id="input-nuevo-nombre" required>
+                    </div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" name="nueva_desc" id="input-nueva-desc" required>
+                    </div>
+                    <button type="submit" class="btn btn-gold btn-sm">Guardar</button>
+                    <button type="button" class="btn btn-secondary btn-sm ms-2" id="cancelar-editar-banda">Cancelar</button>
+                </form>
+                {% endif %}
                 <!-- Caja de comentarios -->
                 <form method="post" action="?banda_id={{ banda_detalle.id }}{% if query %}&q={{ query }}{% endif %}">
                     {% csrf_token %}
@@ -138,7 +154,29 @@
                     <h5>Comentarios:</h5>
                     <ul class="list-group">
                         {% for comentario in comentarios %}
-                            <li class="list-group-item">{{ comentario.texto }} <span class="text-muted" style="font-size:0.9em;">- {{ comentario.usuario.username }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="comentario-texto">
+                                    {{ comentario.texto }}
+                                    <span class="text-muted" style="font-size:0.9em;">- {{ comentario.usuario.username }}</span>
+                                </span>
+                                <!-- Solo muestra los botones si el usuario es admin -->
+                                {% if rol == 'admin' %}
+                                    <span>
+                                        <button type="button" class="btn btn-sm btn-warning me-1 editar-comentario-btn" data-id="{{ comentario.id }}">Editar</button>
+                                        <a href="#" class="btn btn-sm btn-danger eliminar-comentario-btn" data-id="{{ comentario.id }}">Eliminar</a>
+                                    </span>
+                                {% endif %}
+                                <!-- El formulario de edición también solo para admin -->
+                                {% if rol == 'admin' %}
+                                    <form class="editar-comentario-form mt-2" data-id="{{ comentario.id }}" style="display:none; width:100%;">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="texto" value="{{ comentario.texto }}" required>
+                                            <button type="submit" class="btn btn-gold btn-sm">Guardar</button>
+                                            <button type="button" class="btn btn-secondary btn-sm cancelar-edicion-btn">Cancelar</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </li>
                         {% endfor %}
                     </ul>
                 {% endif %}
@@ -215,6 +253,39 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal para agregar banda -->
+<div class="modal fade" id="modalAgregarBanda" tabindex="-1" aria-labelledby="modalAgregarBandaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" action="{% url 'crear_banda' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalAgregarBandaLabel">Agregar Nueva Banda</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="nombreBanda" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombreBanda" name="nombre" required>
+          </div>
+          <div class="mb-3">
+            <label for="descBanda" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descBanda" name="descripcion" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="imgBanda" class="form-label">Imagen</label>
+            <input type="file" class="form-control" id="imgBanda" name="imagen" accept="image/*">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-gold">Agregar Banda</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
