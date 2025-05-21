@@ -7,6 +7,8 @@ import re
 from .models import BandaPop, Perfil, Comentario
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 def lobby_view(request):
@@ -164,3 +166,38 @@ def contacto(request):
         messages.success(request, '¡Gracias por contactarnos! Te responderemos pronto.')
         return redirect('home')
     return redirect('home')
+
+@login_required
+def editar_comentario(request, comentario_id):
+    comentario = get_object_or_404(Comentario, id=comentario_id)
+    if request.user != comentario.usuario and request.user.perfil.rol != 'admin':
+        return redirect('home')
+    if request.method == 'POST':
+        comentario.texto = request.POST.get('comentario')
+        comentario.save()
+        return redirect('home')
+    return render(request, 'editar_comentario.html', {'comentario': comentario})
+
+@login_required
+def eliminar_comentario_ajax(request, comentario_id):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        comentario = get_object_or_404(Comentario, id=comentario_id)
+        if request.user == comentario.usuario or (hasattr(request.user, 'perfil') and request.user.perfil.rol == 'admin'):
+            comentario.delete()
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False, 'error': 'No autorizado'}, status=403)
+    return JsonResponse({'success': False, 'error': 'Método no permitido'}, status=405)
+
+@login_required
+def editar_comentario_ajax(request, comentario_id):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        comentario = get_object_or_404(Comentario, id=comentario_id)
+        if request.user == comentario.usuario or (hasattr(request.user, 'perfil') and request.user.perfil.rol == 'admin'):
+            texto = request.POST.get('texto', '').strip()
+            if texto:
+                comentario.texto = texto
+                comentario.save()
+                return JsonResponse({'success': True, 'texto': comentario.texto})
+            return JsonResponse({'success': False, 'error': 'Texto vacío'}, status=400)
+        return JsonResponse({'success': False, 'error': 'No autorizado'}, status=403)
+    return JsonResponse({'success': False, 'error': 'Método no permitido'}, status=405)
