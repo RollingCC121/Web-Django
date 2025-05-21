@@ -8,7 +8,7 @@ from .models import BandaPop, Perfil, Comentario
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 
 def lobby_view(request):
@@ -130,6 +130,32 @@ def editar_banda(request, banda_id):
             banda.save()
             return redirect('home')
     return render(request, 'editar_banda.html', {'banda': banda})
+
+@login_required
+@require_POST
+def editar_banda_nombre(request, banda_id):
+    banda = get_object_or_404(BandaPop, id=banda_id)
+    if hasattr(request.user, 'perfil') and request.user.perfil.rol == 'admin':
+        nombre = request.POST.get('nombre', '').strip()
+        if nombre:
+            banda.nombre = nombre
+            banda.save()
+            return JsonResponse({'success': True, 'nombre': banda.nombre})
+        return JsonResponse({'success': False, 'error': 'Nombre vacío'}, status=400)
+    return JsonResponse({'success': False, 'error': 'No autorizado'}, status=403)
+
+@login_required
+@require_POST
+def editar_banda_desc(request, banda_id):
+    banda = get_object_or_404(BandaPop, id=banda_id)
+    if hasattr(request.user, 'perfil') and request.user.perfil.rol == 'admin':
+        descripcion = request.POST.get('descripcion', '').strip()
+        if descripcion:
+            banda.descripcion = descripcion
+            banda.save()
+            return JsonResponse({'success': True, 'descripcion': banda.descripcion})
+        return JsonResponse({'success': False, 'error': 'Descripción vacía'}, status=400)
+    return JsonResponse({'success': False, 'error': 'No autorizado'}, status=403)
 
 @login_required
 def eliminar_banda(request, banda_id):

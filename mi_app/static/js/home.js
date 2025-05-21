@@ -236,4 +236,73 @@ document.addEventListener('DOMContentLoaded', function() {
             };
         });
     }
+
+    const editarBandaBtn = document.getElementById('editar-banda-btn');
+    const formEditarBanda = document.getElementById('form-editar-banda');
+    const urlEditarNombre = formEditarBanda.getAttribute('data-url-nombre');
+    const urlEditarDesc = formEditarBanda.getAttribute('data-url-desc');
+    const nombreElem = document.getElementById('banda-nombre');
+    const descElem = document.getElementById('banda-descripcion');
+    if (editarBandaBtn && formEditarBanda && nombreElem && descElem) {
+        editarBandaBtn.addEventListener('click', function() {
+            formEditarBanda.style.display = 'block';
+            editarBandaBtn.style.display = 'none';
+            document.getElementById('input-nuevo-nombre').value = nombreElem.textContent.trim();
+            document.getElementById('input-nueva-desc').value = descElem.textContent.trim();
+            nombreElem.style.display = 'none';
+            descElem.style.display = 'none';
+        });
+        document.getElementById('cancelar-editar-banda').onclick = function() {
+            formEditarBanda.style.display = 'none';
+            editarBandaBtn.style.display = '';
+            nombreElem.style.display = '';
+            descElem.style.display = '';
+        };
+        formEditarBanda.onsubmit = function(e) {
+            e.preventDefault();
+            const nuevoNombre = document.getElementById('input-nuevo-nombre').value;
+            const nuevaDesc = document.getElementById('input-nueva-desc').value;
+            fetch(urlEditarNombre, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: new URLSearchParams({nombre: nuevoNombre})
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    nombreElem.textContent = data.nombre;
+                    // Ahora editar la descripción
+                    fetch(urlEditarDesc, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: new URLSearchParams({descripcion: nuevaDesc})
+                    })
+                    .then(r2 => r2.json())
+                    .then(data2 => {
+                        if (data2.success) {
+                            descElem.textContent = data2.descripcion;
+                        } else {
+                            alert('No se pudo actualizar la descripción.');
+                        }
+                        formEditarBanda.style.display = 'none';
+                        editarBandaBtn.style.display = '';
+                        nombreElem.style.display = '';
+                        descElem.style.display = '';
+                    });
+                } else {
+                    alert('No se pudo actualizar el nombre.');
+                    formEditarBanda.style.display = 'none';
+                    editarBandaBtn.style.display = '';
+                    nombreElem.style.display = '';
+                    descElem.style.display = '';
+                }
+            });
+        };
+    }
 });

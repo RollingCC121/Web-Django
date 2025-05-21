@@ -19,4 +19,6 @@ urlpatterns = [
     path('comentario/editar/<int:comentario_id>/', views.editar_comentario, name='editar_comentario'),
     path('comentario/eliminar_ajax/<int:comentario_id>/', views.eliminar_comentario_ajax, name='eliminar_comentario_ajax'),
     path('comentario/editar_ajax/<int:comentario_id>/', views.editar_comentario_ajax, name='editar_comentario_ajax'),
+    path('banda/editar_nombre/<int:banda_id>/', views.editar_banda_nombre, name='editar_banda_nombre'),
+    path('banda/editar_desc/<int:banda_id>/', views.editar_banda_desc, name='editar_banda_desc'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
