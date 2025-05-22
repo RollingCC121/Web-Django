@@ -33,6 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Rotación de banners laterales ---
     // Puedes agregar más banners agregando rutas a estos arrays:
     const izqImages = [
+    '/static/img/banner1.jpeg',
+    '/static/img/banner2.jpeg',    
     '/static/img/banner3.jpg',
     '/static/img/banner4.jpg',
     '/static/img/banner5.jpg',
@@ -51,6 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
     '/static/img/banner18.jpg'
     ];
     const derImages = [
+    '/static/img/banner1.jpeg',
+    '/static/img/banner2.jpeg',
     '/static/img/banner3.jpg',
     '/static/img/banner4.jpg',
     '/static/img/banner5.jpg',
@@ -68,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     '/static/img/banner17.jpeg',
     '/static/img/banner18.jpg'
     ];
-    let izqIdx = 2, derIdx = 2;
+    let izqIdx = 0, derIdx = 0;
     const izqImg = document.getElementById('bannerIzqImg');
     const derImg = document.getElementById('bannerDerImg');
 
