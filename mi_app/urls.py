@@ -25,5 +25,5 @@ urlpatterns = [
     path('comentario/editar_ajax/<int:comentario_id>/', views.editar_comentario_ajax, name='editar_comentario_ajax'),
     path('banda/editar_nombre/<int:banda_id>/', views.editar_banda_nombre, name='editar_banda_nombre'),
     path('banda/editar_desc/<int:banda_id>/', views.editar_banda_desc, name='editar_banda_desc'),
-     path('sentry-debug/', trigger_error),
+    path('sentry-debug/', trigger_error),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
